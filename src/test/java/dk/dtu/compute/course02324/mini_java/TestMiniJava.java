@@ -6,6 +6,7 @@ import dk.dtu.compute.course02324.mini_java.semantics.ProgramSerializerVisitor;
 import dk.dtu.compute.course02324.mini_java.semantics.ProgramTypeVisitor;
 import dk.dtu.compute.course02324.mini_java.semantics.VisitCoordinator;
 
+import static dk.dtu.compute.course02324.mini_java.MiniJavaRun.printTypeEvaluate;
 import static dk.dtu.compute.course02324.mini_java.utils.Shortcuts.*;
 import static dk.dtu.compute.course02324.mini_java.model.Operator.*;
 
@@ -179,6 +180,209 @@ public class TestMiniJava{
         }
     }
 
+    @Test
+    public void testMult() {
+        System.out.println("Result provided by Java");
 
+        int i = 5;
+        int j = 10;
+        int x = j * i;
+        System.out.println("i = " + i);
+        System.out.println("j = " + j);
+        System.out.println("x = " + x);
+
+        Statement statement = new Sequence(
+                new Declaration(INT, new Var("i")),
+                new Declaration(INT, new Var("j")),
+                new Declaration(INT, new Var("x")),
+                new Assignment(new Var("i"), new IntLiteral(5)),
+                new Assignment(new Var("j"), new IntLiteral(10)),
+                new Assignment(
+                        new Var("x"),
+                        new OperatorExpression(
+                                MULT,
+                                new Var("i"),
+                                new Var("j")
+                        )
+                )
+        );
+
+        printTypeEvaluate(statement);
+
+        tvc.visit(statement);
+        if (!ptv.problems.isEmpty()) {
+            fail("The type visitor did detect typing problmes, which should not be there!");
+        }
+
+        evc.visit(statement);
+
+        Set<String> variables = new HashSet<>(List.of("i", "j", "x"));
+        for (Var var: ptv.variables) {
+            variables.remove(var.name);
+
+            if (var.name.equals("i")) {
+                assertEquals(i, pev.values.get(var), "Value of variable i should be " + i + ".");
+            } else if (var.name.equals("j")) {
+                assertEquals(j, pev.values.get(var), "Value of variable j should be " + j + ".");
+            } else if (var.name.equals("x")) {
+                assertEquals(x, pev.values.get(var), "Value of variable x should be " + x + ".");
+            } else {
+                fail("A non-existing variable " + var.name + " occurred in evaluation of program.");
+            }
+        }
+        assertEquals(0, variables.size(), "Some variables have not been evaluated");
+    }
+
+    @Test
+    public void testDiv() {
+        System.out.println("Result provided by Java");
+
+        int i = 10;
+        int j = 5;
+        int x = i / j;
+        System.out.println("i = " + i);
+        System.out.println("j = " + j);
+        System.out.println("x = " + x);
+
+        Statement statement = new Sequence(
+                new Declaration(INT, new Var("i")),
+                new Declaration(INT, new Var("j")),
+                new Declaration(INT, new Var("x")),
+                new Assignment(new Var("i"), new IntLiteral(10)),
+                new Assignment(new Var("j"), new IntLiteral(5)),
+                new Assignment(
+                        new Var("x"),
+                        new OperatorExpression(
+                                DIV,
+                                new Var("i"),
+                                new Var("j")
+                        )
+                )
+        );
+
+        printTypeEvaluate(statement);
+
+        tvc.visit(statement);
+        if (!ptv.problems.isEmpty()) {
+            fail("The type visitor did detect typing problmes, which should not be there!");
+        }
+
+        evc.visit(statement);
+
+        Set<String> variables = new HashSet<>(List.of("i", "j", "x"));
+        for (Var var: ptv.variables) {
+            variables.remove(var.name);
+
+            if (var.name.equals("i")) {
+                assertEquals(i, pev.values.get(var), "Value of variable i should be " + i + ".");
+            } else if (var.name.equals("j")) {
+                assertEquals(j, pev.values.get(var), "Value of variable j should be " + j + ".");
+            } else if (var.name.equals("x")) {
+                assertEquals(x, pev.values.get(var), "Value of variable x should be " + x + ".");
+            } else {
+                fail("A non-existing variable " + var.name + " occurred in evaluation of program.");
+            }
+        }
+        assertEquals(0, variables.size(), "Some variables have not been evaluated");
+    }
+
+    @Test
+    public void testMod() {
+        System.out.println("Result provided by Java");
+
+        int i = 101;
+        int j = 10;
+        int x = i % j;
+        System.out.println("i = " + i);
+        System.out.println("j = " + j);
+        System.out.println("x = " + x);
+
+        Statement statement = new Sequence(
+                new Declaration(INT, new Var("i")),
+                new Declaration(INT, new Var("j")),
+                new Declaration(INT, new Var("x")),
+                new Assignment(new Var("i"), new IntLiteral(101)),
+                new Assignment(new Var("j"), new IntLiteral(10)),
+                new Assignment(
+                        new Var("x"),
+                        new OperatorExpression(
+                                MOD,
+                                new Var("i"),
+                                new Var("j")
+                        )
+                )
+        );
+
+        printTypeEvaluate(statement);
+
+        tvc.visit(statement);
+        if (!ptv.problems.isEmpty()) {
+            fail("The type visitor did detect typing problmes, which should not be there!");
+        }
+
+        evc.visit(statement);
+
+        Set<String> variables = new HashSet<>(List.of("i", "j", "x"));
+        for (Var var: ptv.variables) {
+            variables.remove(var.name);
+
+            if (var.name.equals("i")) {
+                assertEquals(i, pev.values.get(var), "Value of variable i should be " + i + ".");
+            } else if (var.name.equals("j")) {
+                assertEquals(j, pev.values.get(var), "Value of variable j should be " + j + ".");
+            } else if (var.name.equals("x")) {
+                assertEquals(x, pev.values.get(var), "Value of variable x should be " + x + ".");
+            } else {
+                fail("A non-existing variable " + var.name + " occurred in evaluation of program.");
+            }
+        }
+        assertEquals(0, variables.size(), "Some variables have not been evaluated");
+    }
+
+    @Test
+    public void testMinus1() {
+        System.out.println("Result provided by Java");
+
+        int i = 10;
+        int x = -i;
+        System.out.println("i = " + i);
+        System.out.println("x = " + x);
+
+        Statement statement = new Sequence(
+                new Declaration(INT, new Var("i")),
+                new Declaration(INT, new Var("x")),
+                new Assignment(new Var("i"), new IntLiteral(10)),
+                new Assignment(
+                        new Var("x"),
+                        new OperatorExpression(
+                                MINUS1,
+                                new Var("i")
+                        )
+                )
+        );
+
+        printTypeEvaluate(statement);
+
+        tvc.visit(statement);
+        if (!ptv.problems.isEmpty()) {
+            fail("The type visitor did detect typing problmes, which should not be there!");
+        }
+
+        evc.visit(statement);
+
+        Set<String> variables = new HashSet<>(List.of("i", "x"));
+        for (Var var: ptv.variables) {
+            variables.remove(var.name);
+
+            if (var.name.equals("i")) {
+                assertEquals(i, pev.values.get(var), "Value of variable i should be " + i + ".");
+            } else if (var.name.equals("x")) {
+                assertEquals(x, pev.values.get(var), "Value of variable x should be " + x + ".");
+            } else {
+                fail("A non-existing variable " + var.name + " occurred in evaluation of program.");
+            }
+        }
+        assertEquals(0, variables.size(), "Some variables have not been evaluated");
+    }
 
 }

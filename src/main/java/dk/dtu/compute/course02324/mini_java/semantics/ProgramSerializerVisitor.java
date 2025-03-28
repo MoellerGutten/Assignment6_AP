@@ -11,7 +11,7 @@ public class ProgramSerializerVisitor extends ProgramVisitor  {
 
     private Map<Statement, String> statementRepresentations = new HashMap<>();
 
-    private Map<Expression, String> expessionRepresentations = new HashMap<>();
+    private Map<Expression, String> expressionRepresentations = new HashMap<>();
 
     @Override
     public void visit(Sequence sequence) {
@@ -28,16 +28,16 @@ public class ProgramSerializerVisitor extends ProgramVisitor  {
         if (declaration.expression == null) {
             result += ";";
         } else {
-            result += " = " + expessionRepresentations.get(declaration.expression) + ";";
+            result += " = " + expressionRepresentations.get(declaration.expression) + ";";
         }
         statementRepresentations.put(declaration, result);
     }
 
     @Override
     public void visit(Assignment assignment) {
-        result = assignment.variable.name  + " = " + expessionRepresentations.get(assignment.expression);
+        result = assignment.variable.name  + " = " + expressionRepresentations.get(assignment.expression);
         statementRepresentations.put(assignment, result);
-        expessionRepresentations.put(assignment, result);
+        expressionRepresentations.put(assignment, result);
     }
 
     @Override
@@ -50,13 +50,13 @@ public class ProgramSerializerVisitor extends ProgramVisitor  {
         } else {
             assert false;
         }
-        expessionRepresentations.put(literal, result);
+        expressionRepresentations.put(literal, result);
     }
 
     @Override
     public void visit(Var var) {
         result = var.name;
-        expessionRepresentations.put(var, result);
+        expressionRepresentations.put(var, result);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class ProgramSerializerVisitor extends ProgramVisitor  {
             result = operatorExpression.operator.getName() +"()";
         } else if (operatorExpression.operands.size() == 1) {
             result = operatorExpression.operator.getName() + " " +
-                    expessionRepresentations.get(operatorExpression.operands.getFirst());
+                    expressionRepresentations.get(operatorExpression.operands.getFirst());
         } else if (operatorExpression.operands.size() == 2) {
             result = operandToString(operatorExpression.operator, operatorExpression.operands.getFirst(),0) + " " +
                     operatorExpression.operator.getName() + " " +
@@ -79,15 +79,21 @@ public class ProgramSerializerVisitor extends ProgramVisitor  {
                 } else {
                     first = false;
                 }
-                result += expessionRepresentations.get(operand);
+                result += expressionRepresentations.get(operand);
             }
             result += ")";
         }
-        expessionRepresentations.put(operatorExpression, result);
+        expressionRepresentations.put(operatorExpression, result);
+    }
+
+    @Override
+    public void visit(PrintStatement printStatement) {
+        result = printStatement.string  + ": " + expressionRepresentations.get(printStatement.expression);
+        statementRepresentations.put(printStatement, result);
     }
 
     private String operandToString(Operator operator, Expression expression, int number) {
-        String result = expessionRepresentations.get(expression);
+        String result = expressionRepresentations.get(expression);
         if (expression instanceof OperatorExpression) {
             OperatorExpression operatorExpression = (OperatorExpression) expression;
             if (operatorExpression.operator.precedence > operator.precedence ||

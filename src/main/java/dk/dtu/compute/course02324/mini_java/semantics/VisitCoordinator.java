@@ -16,7 +16,9 @@ public class VisitCoordinator {
         } else if (statement instanceof Declaration) {
             visit((Declaration) statement);
         } else if (statement instanceof Assignment) {
-            visit((Assignment)  statement);
+            visit((Assignment) statement);
+        } else if (statement instanceof PrintStatement) {
+            visit((PrintStatement)  statement);
         } else {
             assert false;
         }
@@ -68,6 +70,10 @@ public class VisitCoordinator {
 
     private void visit(Var var) {
         var.accept(visitor);
+    }
+
+    private void visit(PrintStatement printStatement) {
+        printStatement.accept(visitor);
     }
 
 }

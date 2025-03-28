@@ -16,4 +16,5 @@ public abstract class ProgramVisitor {
 
     abstract public void visit(OperatorExpression operatorExpression);
 
+    abstract public void visit(PrintStatement printStatement);
 }
