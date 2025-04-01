@@ -77,6 +77,21 @@ public class ProgramSerializerVisitor extends ProgramVisitor  {
     }
 
     @Override
+    public void visit(IfThenElse ifThenElse) {
+        result.append("if (");
+        ifThenElse.expression.accept(this);
+        result.append(" >= 0 ) {" + System.lineSeparator());
+        indentLevel++;
+        ifThenElse.ifStatement.accept(this);
+        indentLevel--;
+        result.append("} else {" + System.lineSeparator());
+        indentLevel++;
+        ifThenElse.elseStatement.accept(this);
+        indentLevel--;
+        result.append("}");
+    }
+
+    @Override
     public void visit(Assignment assignment) {
         result.append(assignment.variable.name  + " = ");
         assignment.expression.accept(this);

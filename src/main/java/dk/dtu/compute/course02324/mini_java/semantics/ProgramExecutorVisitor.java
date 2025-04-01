@@ -157,7 +157,24 @@ public class ProgramExecutorVisitor extends ProgramVisitor {
                 and the values of these "components" can then be obtained by
                 looking them up in the values Map.
          */
+        int result = values.get(whileLoop.expression).intValue();
 
+        while (result >= 0) {
+            whileLoop.statement.accept(this);
+            whileLoop.expression.accept(this);
+            result =  values.get(whileLoop.expression).intValue();
+        }
+    }
+
+    @Override
+    public void visit(IfThenElse ifThenElse) {
+        ifThenElse.expression.accept(this);
+
+        if (values.get(ifThenElse.expression).intValue() >= 0) {
+            ifThenElse.ifStatement.accept(this);
+        } else {
+            ifThenElse.elseStatement.accept(this);
+        }
     }
 
     @Override

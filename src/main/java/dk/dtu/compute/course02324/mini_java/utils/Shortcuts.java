@@ -82,4 +82,8 @@ public class Shortcuts {
         return new WhileLoop(expression, statement);
     }
 
+    final public static IfThenElse IfThenElse(@NotNull Expression expression, @NotNull Statement ifStatement, @NotNull Statement elseStatement) {
+        return new IfThenElse(expression, ifStatement, elseStatement);
+    }
+
 }

@@ -343,4 +343,95 @@ public class TestMiniJava{
         assertEquals(0, variables.size(), "Some variables have not been evaluated");
     }
 
+
+    @Test
+    public void testIfThenElseIfPart() {
+        int i = -1;
+        int sum = 0;
+
+        if (i >= 0) {
+            sum = sum + 5;
+        } else {
+            sum = sum + 10;
+        }
+
+        Statement statement = Sequence(
+                Declaration(INT, Var("i"), Literal(-1)),
+                Declaration(INT, Var("sum"), Literal(0)),
+                IfThenElse(
+                        Var("i"),
+                        new Sequence(
+                                new Assignment(Var("sum"), OperatorExpression(PLUS2, new Var("sum"), new IntLiteral(5)))),
+                        new Sequence(
+                                new Assignment(Var("sum"), OperatorExpression(PLUS2, new Var("sum"), new IntLiteral(10)))
+                        )
+                )
+        );
+
+        ptv.visit(statement);
+        if (!ptv.problems.isEmpty()) {
+            fail("The type visitor did detect typing problems, which should not be there!");
+        }
+        pev.visit(statement);
+
+        Set<String> variables = new HashSet<>(List.of("i", "sum"));
+        for (Var var: ptv.variables) {
+            variables.remove(var.name);
+
+            if (var.name.equals("i")) {
+                assertEquals(i, pev.values.get(var), "Value of variable i should be " + i + ".");
+            } else if (var.name.equals("sum")) {
+                assertEquals(sum, pev.values.get(var), "Value of variable j should be " + sum + ".");
+            } else {
+                fail("A non-existing variable " + var.name + " occurred in evaluation of program.");
+            }
+        }
+        assertEquals(0, variables.size(), "Some variables have not been evaluated");
+    }
+
+    @Test
+    public void testIfthenElseElsePart() {
+        int i = 5;
+        int sum = 0;
+
+        if (i >= 0) {
+            sum = sum + 5;
+        } else {
+            sum = sum + 10;
+        }
+
+        Statement statement = Sequence(
+                Declaration(INT, Var("i"), Literal(5)),
+                Declaration(INT, Var("sum"), Literal(0)),
+                IfThenElse(
+                        Var("i"),
+                        new Sequence(
+                                new Assignment(Var("sum"), OperatorExpression(PLUS2, new Var("sum"), new IntLiteral(5)))),
+                        new Sequence(
+                                new Assignment(Var("sum"), OperatorExpression(PLUS2, new Var("sum"), new IntLiteral(10)))
+                        )
+                )
+        );
+
+        ptv.visit(statement);
+        if (!ptv.problems.isEmpty()) {
+            fail("The type visitor did detect typing problems, which should not be there!");
+        }
+        pev.visit(statement);
+
+        Set<String> variables = new HashSet<>(List.of("i", "sum"));
+        for (Var var: ptv.variables) {
+            variables.remove(var.name);
+
+            if (var.name.equals("i")) {
+                assertEquals(i, pev.values.get(var), "Value of variable i should be " + i + ".");
+            } else if (var.name.equals("sum")) {
+                assertEquals(sum, pev.values.get(var), "Value of variable j should be " + sum + ".");
+            } else {
+                fail("A non-existing variable " + var.name + " occurred in evaluation of program.");
+            }
+        }
+        assertEquals(0, variables.size(), "Some variables have not been evaluated");
+    }
+
 }

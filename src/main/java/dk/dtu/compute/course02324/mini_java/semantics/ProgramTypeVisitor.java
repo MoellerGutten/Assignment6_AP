@@ -74,15 +74,31 @@ public class ProgramTypeVisitor extends ProgramVisitor {
         // (which the above accept actually does).
     }
 
+    @Override
     public void visit(WhileLoop whileLoop) {
         whileLoop.expression.accept(this);
 
-        /* TODO Assignment 6b: Here some code most be implemented for
-                checking that the expression is of type integer. If not,
-                the code must add a problem to the problem list.
-         */
+        Type type = typeMapping.get(whileLoop.expression);
+        if (type != INT) {
+            problems.add("Type of conditional must be INT");
+        }
 
         whileLoop.statement.accept(this);
+
+    }
+
+    @Override
+    public void visit(IfThenElse ifThenElse) {
+        ifThenElse.expression.accept(this);
+
+        Type type = typeMapping.get(ifThenElse.expression);
+        if (type != INT) {
+            problems.add("Type of conditional must be INT");
+        }
+
+        ifThenElse.ifStatement.accept(this);
+        ifThenElse.elseStatement.accept(this);
+
     }
 
     @Override

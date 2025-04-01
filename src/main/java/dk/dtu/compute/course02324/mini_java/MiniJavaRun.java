@@ -285,9 +285,23 @@ public class MiniJavaRun {
         PrintStatement printStatement = new PrintStatement("printStatement", new OperatorExpression(PLUS2, new IntLiteral(5), new IntLiteral(5)));
         printTypeEvaluate(printStatement);
 
+        Statement statement6 = Sequence(
+                Declaration(INT, Var("i"), Literal(-1)),
+                Declaration(INT, Var("sum"), Literal(0)),
+                IfThenElse(
+                        Var("i"),
+                        new Sequence(
+                                new Assignment(Var("sum"), OperatorExpression(PLUS2, new Var("sum"), new IntLiteral(5)))),
+                        new Sequence(
+                                new Assignment(Var("sum"), OperatorExpression(PLUS2, new Var("sum"), new IntLiteral(10)))
+                        )
+                )
+        );
+        printTypeEvaluate(statement6);
+
         System.out.println("And now some syntactially wrong examples (crashing) when building statement!");
 
-        Statement statement6 = new Sequence(
+        Statement statement7 = new Sequence(
                 new Declaration(INT, new Var("i")),
                 new Declaration(
                         INT,
