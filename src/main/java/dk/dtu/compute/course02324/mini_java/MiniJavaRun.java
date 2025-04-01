@@ -3,8 +3,8 @@ package dk.dtu.compute.course02324.mini_java;
 import dk.dtu.compute.course02324.mini_java.model.*;
 import dk.dtu.compute.course02324.mini_java.semantics.*;
 
-import static dk.dtu.compute.course02324.mini_java.utils.Shortcuts.*;
 import static dk.dtu.compute.course02324.mini_java.model.Operator.*;
+import static dk.dtu.compute.course02324.mini_java.utils.Shortcuts.*;
 
 public class MiniJavaRun {
 
@@ -75,6 +75,23 @@ public class MiniJavaRun {
         );
 
         printTypeEvaluate(statement0);
+
+
+        Statement statement0_1 = Sequence(
+                Declaration(INT, Var("i"), Literal(-1)),
+                Declaration(INT, Var("sum"), Literal(0)),
+                ConditionalStatement(
+                        Var("i"),
+                        Sequence(
+                                Assignment(Var("sum"), OperatorExpression(PLUS2, Var("sum"), Literal(5)))),
+                        Sequence(
+                                Assignment(Var("sum"), OperatorExpression(PLUS2, Var("sum"), Literal(10)))
+                        )
+                )
+        );
+
+        printTypeEvaluate(statement0_1);
+
 
         System.out.println("Java evaluates - + -1 + 7 - 1 to " + (- + -1 + 7 - 1));
 

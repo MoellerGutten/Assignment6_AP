@@ -23,14 +23,14 @@ public class ProgramExecutorVisitor extends ProgramVisitor {
             args -> { int arg1 = args.get(0).intValue();
                 return arg1; };
 
-    private Function<List<Number>,Number> plus1float =
-            args -> { float arg1 = args.get(0).floatValue();
-                return arg1; };
-
     private Function<List<Number>,Number> plus2int =
             args -> { int arg1 = args.get(0).intValue();
                 int arg2 = args.get(1).intValue();
                 return arg1 + arg2; };
+
+    private Function<List<Number>,Number> plus1float =
+            args -> { float arg1 = args.get(0).floatValue();
+                return arg1; };
 
     private Function<List<Number>,Number> plus2float =
             args -> { float arg1 = args.get(0).floatValue();
@@ -41,14 +41,15 @@ public class ProgramExecutorVisitor extends ProgramVisitor {
             args -> { int arg1 = args.get(0).intValue();
                 return arg1*-1; };
 
-    private Function<List<Number>,Number> minus1float =
-            args -> { float arg1 = args.get(0).floatValue();
-                return arg1*-1; };
 
     private Function<List<Number>,Number> minus2int =
             args -> { int arg1 = args.get(0).intValue();
                 int arg2 = args.get(1).intValue();
                 return arg1 - arg2; };
+
+    private Function<List<Number>,Number> minus1float =
+            args -> { float arg1 = args.get(0).floatValue();
+                return arg1*-1; };
 
     private Function<List<Number>,Number> minus2float =
             args -> { float arg1 = args.get(0).floatValue();
@@ -75,7 +76,7 @@ public class ProgramExecutorVisitor extends ProgramVisitor {
                 float arg2 = args.get(1).floatValue();
                 return arg1 / arg2; };
 
-    private Function<List<Number>,Number> modint =
+    private Function<List<Number>,Number> mod =
             args -> { int arg1 = args.get(0).intValue();
                 int arg2 = args.get(1).intValue();
                 return arg1 % arg2; };
@@ -107,7 +108,7 @@ public class ProgramExecutorVisitor extends ProgramVisitor {
                     entry(FLOAT, divfloat ) )
             ),
             entry(MOD, Map.ofEntries(
-                    entry(INT, modint))
+                    entry(INT, mod))
             ));
 
     public ProgramExecutorVisitor(ProgramTypeVisitor pv) {
@@ -137,27 +138,30 @@ public class ProgramExecutorVisitor extends ProgramVisitor {
     @Override
     public void visit(PrintStatement printStatement) {
         printStatement.expression.accept(this);
-        System.out.println(printStatement.prefix + " " + values.get(printStatement.expression));
+        System.out.println(printStatement.prefix + ": " + values.get(printStatement.expression));
     }
 
     @Override
     public void visit(WhileLoop whileLoop) {
         whileLoop.expression.accept(this);
+        Number result = values.get(whileLoop.expression);
+        while (result.intValue() >= 0) {
+            whileLoop.statement.accept(this);
+            whileLoop.expression.accept(this);
+            result = values.get(whileLoop.expression);
+        }
+    }
 
-        /* TODO Assignment 6b: Here some code which actually executes the
-                while loop must be added. This code should get the current value
-                of the expression, and if that expression is greater or equal
-                than 0, execute the statement of the loop (by recursively
-                executing the statement by invoking the accept method). After
-                that, it should trigger the evaluation of the expression of the
-                while loop again. If the value of this expression is still greater
-                or equal than 0, the execution of the loop should be continued ...
-                For doing this, the respective accept methods need to be
-                issued on the relevant "components" of the while statements,
-                and the values of these "components" can then be obtained by
-                looking them up in the values Map.
-         */
-
+    @Override
+    public void visit(ConditionalStatement conditionalStatement) {
+        conditionalStatement.expression.accept(this);
+        Number result = values.get(conditionalStatement.expression);
+        if (result.intValue() >= 0) {
+            conditionalStatement.ifStatement.accept(this);
+        }
+        else {
+            conditionalStatement.elseStatement.accept(this);
+        }
     }
 
     @Override

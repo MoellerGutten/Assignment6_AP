@@ -12,6 +12,8 @@ public abstract class ProgramVisitor {
 
     abstract public void visit(WhileLoop whileLoop);
 
+    abstract public void visit(ConditionalStatement conditionalStatement);
+
     abstract public void visit(Assignment assignment);
 
     abstract public void visit(Literal literal);

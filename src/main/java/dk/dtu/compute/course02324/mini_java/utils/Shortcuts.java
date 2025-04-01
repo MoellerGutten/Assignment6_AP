@@ -82,4 +82,8 @@ public class Shortcuts {
         return new WhileLoop(expression, statement);
     }
 
+    final public static ConditionalStatement ConditionalStatement(@NotNull Expression expression, @NotNull Statement statementIf, @NotNull Statement statementElse) {
+        return new ConditionalStatement(expression, statementIf, statementElse);
+    }
+
 }

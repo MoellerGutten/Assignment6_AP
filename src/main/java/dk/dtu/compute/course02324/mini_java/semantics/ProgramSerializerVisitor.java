@@ -2,9 +2,6 @@ package dk.dtu.compute.course02324.mini_java.semantics;
 
 import dk.dtu.compute.course02324.mini_java.model.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ProgramSerializerVisitor extends ProgramVisitor  {
 
     private StringBuilder result = new StringBuilder();
@@ -74,6 +71,24 @@ public class ProgramSerializerVisitor extends ProgramVisitor  {
         indentLevel--;
         addIndentation();
         result.append("}");
+    }
+
+    @Override
+    public void visit(ConditionalStatement conditionalStatement) {
+        result.append("if ( ");
+        conditionalStatement.expression.accept(this);
+
+        result.append(" >= 0 ) {" + System.lineSeparator());
+        indentLevel++;
+        conditionalStatement.ifStatement.accept(this);
+        indentLevel--;
+        result.append("} else {" + System.lineSeparator());
+
+        indentLevel++;
+        conditionalStatement.elseStatement.accept(this);
+        indentLevel--;
+        result.append("}");
+
     }
 
     @Override
