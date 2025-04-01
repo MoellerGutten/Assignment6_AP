@@ -280,6 +280,11 @@ public class MiniJavaRun {
 
         printTypeEvaluate(statement5);
 
+        System.out.println("Java print statement vs ours: " + (5+5));
+
+        PrintStatement printStatement = new PrintStatement("printStatement", new OperatorExpression(PLUS2, new IntLiteral(5), new IntLiteral(5)));
+        printTypeEvaluate(printStatement);
+
         System.out.println("And now some syntactially wrong examples (crashing) when building statement!");
 
         Statement statement6 = new Sequence(
