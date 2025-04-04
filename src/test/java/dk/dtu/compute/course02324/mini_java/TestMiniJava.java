@@ -344,7 +344,10 @@ public class TestMiniJava{
         assertEquals(0, variables.size(), "Some variables have not been evaluated");
     }
 
-
+    /**
+     * Compares java evaluation to our MiniJava evaluation and checks for any problems along the way
+     * Works much like above tests.
+     */
     @Test
     public void testIfThenElseIfPart() {
         int i = -1;
@@ -390,6 +393,10 @@ public class TestMiniJava{
         assertEquals(0, variables.size(), "Some variables have not been evaluated");
     }
 
+    /**
+     * Compares java evaluation to our MiniJava evaluation and checks for any problems along the way
+     * Works much like above tests.
+     */
     @Test
     public void testIfthenElseElsePart() {
         int i = 5;
@@ -434,7 +441,9 @@ public class TestMiniJava{
         }
         assertEquals(0, variables.size(), "Some variables have not been evaluated");
     }
-
+    /**
+     * Tests typecheck for expression in IfThenElse
+     */
     @Test
     public void testIfthenElseTypeCheck() {
         Statement statement = Sequence(
