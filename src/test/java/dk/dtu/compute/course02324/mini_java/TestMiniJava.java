@@ -6,6 +6,7 @@ import dk.dtu.compute.course02324.mini_java.semantics.*;
 import static dk.dtu.compute.course02324.mini_java.utils.Shortcuts.*;
 import static dk.dtu.compute.course02324.mini_java.model.Operator.*;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -434,4 +435,26 @@ public class TestMiniJava{
         assertEquals(0, variables.size(), "Some variables have not been evaluated");
     }
 
+    @Test
+    public void testIfthenElseTypeCheck() {
+        Statement statement = Sequence(
+                Declaration(FLOAT, Var("i"), new FloatLiteral(5)),
+                Declaration(INT, Var("sum"), Literal(0)),
+                IfThenElse(
+                        Var("i"),
+                        new Sequence(
+                                new Assignment(Var("sum"), OperatorExpression(PLUS2, new Var("sum"), new FloatLiteral(5)))),
+                        new Sequence(
+                                new Assignment(Var("sum"), OperatorExpression(PLUS2, new Var("sum"), new IntLiteral(10)))
+                        )
+                )
+        );
+        ptv.visit(statement);
+        if (ptv.problems.isEmpty()) {
+            fail("The type visitor did detect typing problems, which should not be there!");
+        }
+
+        Assertions.assertEquals("Type of conditional must be INT", ptv.problems.getFirst(), "Type of expression should be INT, was FLOAT");
+
+    }
 }
