@@ -3,6 +3,9 @@ package dk.dtu.compute.course02324.mini_java.model;
 import dk.dtu.compute.course02324.mini_java.semantics.ProgramVisitor;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * a class that acts as an if else structure using the visitor pattern
+ */
 public class IfThenElse implements Statement {
     final public Expression expression;
 

@@ -78,10 +78,23 @@ public class Shortcuts {
         return new Sequence(statements);
     }
 
+    /**
+     * A static method that acts as a shortcut, so we don't need to add the tag new
+     * @param expression the while loop expression
+     * @param statement the statements to be executed if expression is true
+     * @return the while loop object
+     */
     final public static WhileLoop WhileLoop(@NotNull Expression expression, @NotNull Statement statement) {
         return new WhileLoop(expression, statement);
     }
 
+    /**
+     * A static method that acts as a shortcut, so we don't need to add the tag new
+     * @param expression the if statement expression
+     * @param ifStatement the statements to be executed if expression is true
+     * @param elseStatement the statements to be executed if expression is false
+     * @return the if else object
+     */
     final public static IfThenElse IfThenElse(@NotNull Expression expression, @NotNull Statement ifStatement, @NotNull Statement elseStatement) {
         return new IfThenElse(expression, ifStatement, elseStatement);
     }
