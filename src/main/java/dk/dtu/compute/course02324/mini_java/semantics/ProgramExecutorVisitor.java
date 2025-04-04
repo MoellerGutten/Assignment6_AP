@@ -19,9 +19,12 @@ public class ProgramExecutorVisitor extends ProgramVisitor {
 
     final public Map<Expression, Number> values = new HashMap<>();
 
+    /**
+     * Takes a number and returns the plus version of the number
+     */
     private Function<List<Number>,Number> plus1int =
             args -> { int arg1 = args.get(0).intValue();
-                return arg1; };
+                return +arg1; };
 
     private Function<List<Number>,Number> plus1float =
             args -> { float arg1 = args.get(0).floatValue();
@@ -37,6 +40,9 @@ public class ProgramExecutorVisitor extends ProgramVisitor {
                 float arg2 = args.get(1).floatValue();
                 return arg1 + arg2; };
 
+    /**
+     * Takes a number and flips the sign
+     */
     private Function<List<Number>,Number> minus1int =
             args -> { int arg1 = args.get(0).intValue();
                 return arg1*-1; };
@@ -45,6 +51,9 @@ public class ProgramExecutorVisitor extends ProgramVisitor {
             args -> { float arg1 = args.get(0).floatValue();
                 return arg1*-1; };
 
+    /**
+     * Takes two int numbers and subtracts them
+     */
     private Function<List<Number>,Number> minus2int =
             args -> { int arg1 = args.get(0).intValue();
                 int arg2 = args.get(1).intValue();
@@ -55,32 +64,50 @@ public class ProgramExecutorVisitor extends ProgramVisitor {
                 float arg2 = args.get(1).floatValue();
                 return arg1 - arg2; };
 
+    /**
+     * Takes two int numbers and multiples them
+     */
     private Function<List<Number>,Number> multint =
             args -> { int arg1 = args.get(0).intValue();
                 int arg2 = args.get(1).intValue();
                 return arg1 * arg2; };
 
+    /**
+     * Takes two float numbers and multiples them
+     */
     private Function<List<Number>,Number> multfloat =
             args -> { float arg1 = args.get(0).floatValue();
                 float arg2 = args.get(1).floatValue();
                 return arg1 * arg2; };
 
+    /**
+     * Takes two int numbers and divides them
+     */
     private Function<List<Number>,Number> divint =
             args -> { int arg1 = args.get(0).intValue();
                 int arg2 = args.get(1).intValue();
                 return arg1 / arg2; };
 
+    /**
+     * Takes two float numbers and divides them
+     */
     private Function<List<Number>,Number> divfloat =
             args -> { float arg1 = args.get(0).floatValue();
                 float arg2 = args.get(1).floatValue();
                 return arg1 / arg2; };
 
+    /**
+     * Takes two numbers, divides them and get the remainder
+     */
     private Function<List<Number>,Number> modint =
             args -> { int arg1 = args.get(0).intValue();
                 int arg2 = args.get(1).intValue();
                 return arg1 % arg2; };
 
 
+    /**
+     * A map that contains operators, which are mapped to valid types and associated method for that type
+     */
     final private Map<Operator, Map<Type, Function<List<Number>,Number>>> operatorFunctions = Map.ofEntries(
             entry(PLUS1, Map.ofEntries(
                     entry(INT, plus1int),
@@ -134,12 +161,20 @@ public class ProgramExecutorVisitor extends ProgramVisitor {
         }
     }
 
+    /**
+     * Executes the functionality of the given PrintStatement
+     * @param printStatement
+     */
     @Override
     public void visit(PrintStatement printStatement) {
         printStatement.expression.accept(this);
         System.out.println(printStatement.prefix + " " + values.get(printStatement.expression));
     }
 
+    /**
+     * Executes the functionality of the given WhileLoop
+     * @param whileLoop
+     */
     @Override
     public void visit(WhileLoop whileLoop) {
         whileLoop.expression.accept(this);
@@ -153,6 +188,10 @@ public class ProgramExecutorVisitor extends ProgramVisitor {
         }
     }
 
+    /**
+     * Executes the functionality of the given IfThenElse
+     * @param ifThenElse
+     */
     @Override
     public void visit(IfThenElse ifThenElse) {
         ifThenElse.expression.accept(this);

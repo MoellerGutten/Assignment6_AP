@@ -74,6 +74,10 @@ public class ProgramTypeVisitor extends ProgramVisitor {
         // (which the above accept actually does).
     }
 
+    /**
+     * Checks if expression is of type INT and accepts while loop statement and expression
+     * @param whileLoop
+     */
     @Override
     public void visit(WhileLoop whileLoop) {
         whileLoop.expression.accept(this);
@@ -87,6 +91,10 @@ public class ProgramTypeVisitor extends ProgramVisitor {
 
     }
 
+    /**
+     * Checks if expression is of type INT and accepts ifThenElse ifStatement, elseStatement and expression
+     * @param ifThenElse
+     */
     @Override
     public void visit(IfThenElse ifThenElse) {
         ifThenElse.expression.accept(this);

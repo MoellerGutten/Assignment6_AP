@@ -64,6 +64,11 @@ public class ProgramSerializerVisitor extends ProgramVisitor  {
         result.append(")");
     }
 
+    /**
+     * Adds the correct syntax of a whileloop with the correct expression
+     * and statements from the given WhileLoop object
+     * @param whileLoop
+     */
     @Override
     public void visit(WhileLoop whileLoop) {
         result.append("while ( ");
@@ -76,6 +81,11 @@ public class ProgramSerializerVisitor extends ProgramVisitor  {
         result.append("}");
     }
 
+    /**
+     * Adds the correct syntax of a IfThenElse with the correct expression
+     * and statements from the given IfThenElse object
+     * @param ifThenElse
+     */
     @Override
     public void visit(IfThenElse ifThenElse) {
         result.append("if (");
