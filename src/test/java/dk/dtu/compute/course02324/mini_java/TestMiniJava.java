@@ -240,6 +240,29 @@ public class TestMiniJava{
         assertEquals(0, variables.size(), "Some variables have not been evaluated");
     }
 
+    /**
+     * Tests typecheck for expression in WhileLoop
+     */
+    @Test
+    public void testWhileLoopTypeCheck() {
+        Statement statement = Sequence(
+                Declaration(FLOAT, Var("i"), new FloatLiteral(5)),
+                Declaration(INT, Var("sum"), Literal(0)),
+                WhileLoop(
+                        Var("i"),
+                        new Sequence(
+                                new Assignment(Var("sum"), OperatorExpression(PLUS2, new Var("sum"), new FloatLiteral(5))))
+                )
+        );
+        ptv.visit(statement);
+        if (ptv.problems.isEmpty()) {
+            fail("The type visitor did not detect typing problems, which should be there!");
+        }
+
+        Assertions.assertEquals("Type of conditional must be INT", ptv.problems.getFirst(), "Type of expression should be INT, was FLOAT");
+
+    }
+
     @Test
     public void testPrintAndAdditionalOperators() {
         int i = - + -1 + 7 - 1;
@@ -460,10 +483,9 @@ public class TestMiniJava{
         );
         ptv.visit(statement);
         if (ptv.problems.isEmpty()) {
-            fail("The type visitor did detect typing problems, which should not be there!");
+            fail("The type visitor did not detect typing problems, which should be there!");
         }
 
         Assertions.assertEquals("Type of conditional must be INT", ptv.problems.getFirst(), "Type of expression should be INT, was FLOAT");
-
     }
 }

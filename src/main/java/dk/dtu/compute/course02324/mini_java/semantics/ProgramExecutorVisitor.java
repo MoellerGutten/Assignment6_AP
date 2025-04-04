@@ -30,11 +30,17 @@ public class ProgramExecutorVisitor extends ProgramVisitor {
             args -> { float arg1 = args.get(0).floatValue();
                 return arg1; };
 
+    /**
+     * Addition for two int numbers
+     */
     private Function<List<Number>,Number> plus2int =
             args -> { int arg1 = args.get(0).intValue();
                 int arg2 = args.get(1).intValue();
                 return arg1 + arg2; };
 
+    /**
+     * Addition for two float numbers
+     */
     private Function<List<Number>,Number> plus2float =
             args -> { float arg1 = args.get(0).floatValue();
                 float arg2 = args.get(1).floatValue();
