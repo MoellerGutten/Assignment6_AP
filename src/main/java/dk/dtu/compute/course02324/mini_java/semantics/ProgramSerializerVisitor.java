@@ -67,6 +67,7 @@ public class ProgramSerializerVisitor extends ProgramVisitor  {
     /**
      * Adds the correct syntax of a whileloop with the correct expression
      * and statements from the given WhileLoop object
+     *
      * @param whileLoop
      */
     @Override
@@ -84,6 +85,7 @@ public class ProgramSerializerVisitor extends ProgramVisitor  {
     /**
      * Adds the correct syntax of a IfThenElse with the correct expression
      * and statements from the given IfThenElse object
+     *
      * @param ifThenElse
      */
     @Override

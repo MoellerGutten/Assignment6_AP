@@ -10,18 +10,21 @@ public abstract class ProgramVisitor {
 
     /**
      * Method requirement for type PrintStatement in visit method
+     *
      * @param printStatement
      */
     abstract public void visit(PrintStatement printStatement);
 
     /**
      * Method requirement for type WhileLoop in visit method
+     *
      * @param whileLoop
      */
     abstract public void visit(WhileLoop whileLoop);
 
     /**
      * Method requirement for type IfThenElse in visit method
+     *
      * @param ifThenElse
      */
     abstract public void visit(IfThenElse ifThenElse);

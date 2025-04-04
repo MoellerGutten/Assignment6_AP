@@ -80,6 +80,7 @@ public class Shortcuts {
 
     /**
      * A static method that acts as a shortcut, so we don't need to add the tag new
+     *
      * @param expression the while loop expression
      * @param statement the statements to be executed if expression is true
      * @return the while loop object
@@ -90,6 +91,7 @@ public class Shortcuts {
 
     /**
      * A static method that acts as a shortcut, so we don't need to add the tag new
+     *
      * @param expression the if statement expression
      * @param ifStatement the statements to be executed if expression is true
      * @param elseStatement the statements to be executed if expression is false

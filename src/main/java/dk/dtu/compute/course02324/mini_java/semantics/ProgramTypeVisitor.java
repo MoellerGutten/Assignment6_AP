@@ -76,6 +76,7 @@ public class ProgramTypeVisitor extends ProgramVisitor {
 
     /**
      * Checks if expression is of type INT and accepts while loop statement and expression
+     *
      * @param whileLoop
      */
     @Override
@@ -93,6 +94,7 @@ public class ProgramTypeVisitor extends ProgramVisitor {
 
     /**
      * Checks if expression is of type INT and accepts ifThenElse ifStatement, elseStatement and expression
+     *
      * @param ifThenElse
      */
     @Override
